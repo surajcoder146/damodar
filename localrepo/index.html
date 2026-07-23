@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Luminous Bloom - Login</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============ LOADING SCREEN ============ -->
+  <div id="loading-screen">
+    <div class="loader-container">
+      <!-- 3D Flower Scene -->
+      <div class="flower-scene">
+        <div class="flower" id="flower">
+
+          <!-- Floating Sparkle Particles -->
+          <div class="sparkle s1"></div>
+          <div class="sparkle s2"></div>
+          <div class="sparkle s3"></div>
+          <div class="sparkle s4"></div>
+          <div class="sparkle s5"></div>
+          <div class="sparkle s6"></div>
+          <div class="sparkle s7"></div>
+          <div class="sparkle s8"></div>
+
+          <!-- Stem -->
+          <div class="stem">
+            <div class="stem-main"></div>
+            <div class="stem-leaf leaf-left">
+              <div class="leaf-vein"></div>
+            </div>
+            <div class="stem-leaf leaf-right">
+              <div class="leaf-vein"></div>
+            </div>
+          </div>
+
+          <!-- Outer Petals (8) - Large, slightly tilted -->
+          <div class="petal-layer layer-outer">
+            <div class="petal op0"><div class="petal-inner"><div class="petal-glow"></div></div></div>
+            <div class="petal op1"><div class="petal-inner"><div class="petal-glow"></div></div></div>
+            <div class="petal op2"><div class="petal-inner"><div class="petal-glow"></div></div></div>
+            <div class="petal op3"><div class="petal-inner"><div class="petal-glow"></div></div></div>
+            <div class="petal op4"><div class="petal-inner"><div class="petal-glow"></div></div></div>
+            <div class="petal op5"><div class="petal-inner"><div class="petal-glow"></div></div></div>
+            <div class="petal op6"><div class="petal-inner"><div class="petal-glow"></div></div></div>
+            <div class="petal op7"><div class="petal-inner"><div class="petal-glow"></div></div></div>
+          </div>
+
+          <!-- Inner Petals (6) - Smaller, steeper -->
+          <div class="petal-layer layer-inner">
+            <div class="petal ip0"><div class="petal-inner"><div class="petal-glow"></div></div></div>
+            <div class="petal ip1"><div class="petal-inner"><div class="petal-glow"></div></div></div>
+            <div class="petal ip2"><div class="petal-inner"><div class="petal-glow"></div></div></div>
+            <div class="petal ip3"><div class="petal-inner"><div class="petal-glow"></div></div></div>
+            <div class="petal ip4"><div class="petal-inner"><div class="petal-glow"></div></div></div>
+            <div class="petal ip5"><div class="petal-inner"><div class="petal-glow"></div></div></div>
+          </div>
+
+          <!-- Center Core -->
+          <div class="core">
+            <div class="core-glow"></div>
+            <div class="core-pistil"></div>
+            <div class="core-stamen s1"></div>
+            <div class="core-stamen s2"></div>
+            <div class="core-stamen s3"></div>
+            <div class="core-stamen s4"></div>
+            <div class="core-stamen s5"></div>
+            <div class="core-stamen s6"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading Progress Ring -->
+      <div class="progress-ring-container">
+        <svg class="progress-ring" viewBox="0 0 200 200">
+          <circle class="progress-bg" cx="100" cy="100" r="88" />
+          <circle class="progress-fill" id="progress-fill" cx="100" cy="100" r="88"
+                  pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" />
+        </svg>
+        <div class="progress-text">
+          <span id="progress-percent">0</span><small>%</small>
+        </div>
+        <div class="progress-label">BLOOMING</div>
+      </div>
+
+      <div class="status-container">
+        <div class="status-msg" id="status-msg">Awakening the bloom...</div>
+        <div class="status-dots"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ LOGIN PAGE ============ -->
+  <div id="login-page">
+    <div class="bg-glow"></div>
+
+    <div class="login-card">
+      <div class="login-card-inner">
+        <div class="login-header">
+          <div class="login-icon">
+            <div class="icon-petal"></div>
+            <div class="icon-petal"></div>
+            <div class="icon-petal"></div>
+            <div class="icon-petal"></div>
+            <div class="icon-petal"></div>
+            <div class="icon-petal"></div>
+          </div>
+          <h1>WELCOME BACK</h1>
+          <p>Sign in to your account</p>
+        </div>
+
+        <form id="login-form">
+          <div class="input-group">
+            <label for="username">USERNAME</label>
+            <div class="input-wrapper">
+              <input type="text" id="username" placeholder="Enter your username" />
+              <span class="input-highlight"></span>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="password">PASSWORD</label>
+            <div class="input-wrapper">
+              <input type="password" id="password" placeholder="Enter your password" />
+              <span class="input-highlight"></span>
+            </div>
+          </div>
+
+          <div class="login-options">
+            <label class="checkbox-label">
+              <input type="checkbox" checked />
+              <span class="checkmark"></span>
+              Remember me
+            </label>
+            <a href="#" class="forgot-link">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="login-btn">
+            <span>SIGN IN</span>
+          </button>
+        </form>
+
+        <div class="login-footer">
+          <span class="status-led"></span>
+          Secured Connection
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+

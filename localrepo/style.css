@@ -1,0 +1,920 @@
+﻿/* ============================================
+   LUMINOUS BLOOM — 3D FLOWER LOADING SCREEN + LOGIN
+   ============================================ */
+
+/* ---------- ROOT & RESET ---------- */
+:root {
+  --bg-dark: #0a0a12;
+  --bg-card: rgba(18, 18, 30, 0.92);
+  --text: #f0eef8;
+  --text-dim: #7a7a9a;
+  --petal-pink: #ff6b9d;
+  --petal-peach: #ffa07a;
+  --petal-magenta: #d4508b;
+  --petal-light: #ffb6d9;
+  --core-gold: #ffd700;
+  --core-amber: #ff8c00;
+  --glow-pink: 0 0 60px rgba(255, 107, 157, 0.3);
+  --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg-dark);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================
+   LOADING SCREEN
+   ============================================ */
+#loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(255, 107, 157, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(255, 160, 122, 0.05) 0%, transparent 40%),
+    radial-gradient(ellipse at 20% 80%, rgba(212, 80, 139, 0.04) 0%, transparent 40%),
+    var(--bg-dark);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+#loading-screen.hidden {
+  opacity: 0;
+  transform: scale(1.08);
+  pointer-events: none;
+}
+
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+/* ============================================
+   3D FLOWER SCENE
+   ============================================ */
+.flower-scene {
+  width: 260px;
+  height: 320px;
+  perspective: 900px;
+  perspective-origin: 50% 35%;
+}
+
+.flower {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  animation: flower-float 5s ease-in-out infinite;
+}
+
+@keyframes flower-float {
+  0%, 100% { transform: rotateY(0deg) translateY(0); }
+  25% { transform: rotateY(6deg) translateY(-5px); }
+  75% { transform: rotateY(-4deg) translateY(-3px); }
+}
+
+/* ---- Sparkle Particles ---- */
+.sparkle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.6), 0 0 12px rgba(255, 182, 217, 0.3);
+  animation: sparkle-twinkle 2s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.s1 { top: 5%; left: 20%; animation-delay: 0s; }
+.s2 { top: 8%; right: 25%; animation-delay: 0.4s; width: 3px; height: 3px; }
+.s3 { top: 15%; left: 45%; animation-delay: 0.8s; width: 5px; height: 5px; }
+.s4 { top: 25%; right: 10%; animation-delay: 1.2s; width: 3px; height: 3px; }
+.s5 { top: 2%; left: 60%; animation-delay: 1.6s; width: 2px; height: 2px; }
+.s6 { top: 20%; left: 8%; animation-delay: 2s; }
+.s7 { top: 12%; right: 40%; animation-delay: 2.4s; width: 3px; height: 3px; }
+.s8 { top: 28%; right: 55%; animation-delay: 2.8s; }
+
+@keyframes sparkle-twinkle {
+  0%, 100% { opacity: 0; transform: scale(0); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+/* ---- Stem ---- */
+.stem {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 10px;
+  height: 150px;
+  transform: translateX(-50%);
+  transform-style: preserve-3d;
+}
+
+.stem-main {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #2d5a3d, #4a8a5e, #2d5a3d);
+  border-radius: 5px;
+  position: relative;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+}
+
+.stem-main::before {
+  content: '';
+  position: absolute;
+  left: 30%;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: rgba(255,255,255,0.06);
+}
+
+.stem-leaf {
+  position: absolute;
+  width: 40px;
+  height: 22px;
+  border-radius: 50% 50% 50% 0;
+  background: linear-gradient(135deg, #3a7a4e, #2a5a3a);
+  border: 1px solid rgba(255,255,255,0.05);
+  overflow: hidden;
+}
+
+.leaf-left {
+  left: -38px;
+  top: 60%;
+  transform: rotate(-30deg);
+  border-radius: 50% 0 50% 50%;
+}
+
+.leaf-right {
+  right: -38px;
+  top: 45%;
+  transform: rotate(30deg);
+  border-radius: 0 50% 50% 50%;
+}
+
+.leaf-vein {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 1.5px;
+  height: 100%;
+  background: rgba(255,255,255,0.08);
+  transform: translateX(-50%);
+}
+
+.leaf-vein::before,
+.leaf-vein::after {
+  content: '';
+  position: absolute;
+  top: 30%;
+  width: 10px;
+  height: 1px;
+  background: rgba(255,255,255,0.05);
+}
+
+.leaf-vein::before { left: 2px; transform: rotate(-20deg); }
+.leaf-vein::after { right: 2px; transform: rotate(20deg); }
+
+/* ---- Petal Layers ---- */
+.petal-layer {
+  position: absolute;
+  left: 50%;
+  top: 32%;
+  transform-style: preserve-3d;
+  transform: translateX(-50%);
+}
+
+/* ---- Individual Petal ---- */
+.petal {
+  position: absolute;
+  transform-style: preserve-3d;
+  transform-origin: bottom center;
+  transition: transform 2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.petal-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.petal-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 40% 20%,
+    rgba(255, 255, 255, 0.2),
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+/* ---- Outer Petals (8) ---- */
+.layer-outer .petal {
+  width: 80px;
+  height: 110px;
+  margin-left: -40px;
+  margin-top: -55px;
+}
+
+.layer-outer .petal-inner {
+  border-radius: 50% 50% 45% 45% / 60% 60% 35% 35%;
+  background: linear-gradient(
+    170deg,
+    rgba(255, 182, 217, 0.7) 0%,
+    rgba(255, 107, 157, 0.5) 30%,
+    rgba(212, 80, 139, 0.35) 60%,
+    rgba(160, 50, 100, 0.2) 100%
+  );
+  border: 1px solid rgba(255, 182, 217, 0.15);
+  box-shadow:
+    inset 0 -15px 30px rgba(0, 0, 0, 0.25),
+    inset 0 10px 20px rgba(255, 255, 255, 0.08),
+    0 0 15px rgba(255, 107, 157, 0.1);
+}
+
+.layer-outer .petal-inner::before {
+  content: '';
+  position: absolute;
+  top: 8%;
+  left: 15%;
+  width: 70%;
+  height: 45%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 220, 240, 0.2),
+    transparent 65%
+  );
+  border-radius: 50%;
+}
+
+.layer-outer .petal-inner::after {
+  content: '';
+  position: absolute;
+  bottom: 12%;
+  left: 50%;
+  width: 1.5px;
+  height: 40%;
+  background: linear-gradient(to top, rgba(255, 182, 217, 0.15), transparent);
+  transform: translateX(-50%);
+}
+
+/* Outer petal positions - closed */
+.op0 { transform: rotateY(0deg) rotateX(78deg) translateZ(0px); }
+.op1 { transform: rotateY(45deg) rotateX(78deg) translateZ(0px); }
+.op2 { transform: rotateY(90deg) rotateX(78deg) translateZ(0px); }
+.op3 { transform: rotateY(135deg) rotateX(78deg) translateZ(0px); }
+.op4 { transform: rotateY(180deg) rotateX(78deg) translateZ(0px); }
+.op5 { transform: rotateY(225deg) rotateX(78deg) translateZ(0px); }
+.op6 { transform: rotateY(270deg) rotateX(78deg) translateZ(0px); }
+.op7 { transform: rotateY(315deg) rotateX(78deg) translateZ(0px); }
+
+/* Outer petal bloom states */
+.op0.bloom { transform: rotateY(0deg) rotateX(14deg) translateZ(22px); }
+.op1.bloom { transform: rotateY(45deg) rotateX(14deg) translateZ(22px); }
+.op2.bloom { transform: rotateY(90deg) rotateX(14deg) translateZ(22px); }
+.op3.bloom { transform: rotateY(135deg) rotateX(14deg) translateZ(22px); }
+.op4.bloom { transform: rotateY(180deg) rotateX(14deg) translateZ(22px); }
+.op5.bloom { transform: rotateY(225deg) rotateX(14deg) translateZ(22px); }
+.op6.bloom { transform: rotateY(270deg) rotateX(14deg) translateZ(22px); }
+.op7.bloom { transform: rotateY(315deg) rotateX(14deg) translateZ(22px); }
+
+/* ---- Inner Petals (6) ---- */
+.layer-inner .petal {
+  width: 56px;
+  height: 82px;
+  margin-left: -28px;
+  margin-top: -41px;
+}
+
+.layer-inner .petal-inner {
+  border-radius: 50% 50% 40% 40% / 60% 60% 30% 30%;
+  background: linear-gradient(
+    170deg,
+    rgba(255, 160, 122, 0.7) 0%,
+    rgba(255, 107, 157, 0.55) 35%,
+    rgba(212, 80, 139, 0.4) 65%,
+    rgba(200, 60, 120, 0.2) 100%
+  );
+  border: 1px solid rgba(255, 160, 122, 0.12);
+  box-shadow:
+    inset 0 -12px 24px rgba(0, 0, 0, 0.2),
+    inset 0 8px 16px rgba(255, 255, 255, 0.06);
+}
+
+.layer-inner .petal-inner::before {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 20%;
+  width: 60%;
+  height: 40%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 220, 200, 0.15),
+    transparent 60%
+  );
+  border-radius: 50%;
+}
+
+/* Inner petal positions - closed */
+.ip0 { transform: rotateY(30deg) rotateX(80deg) translateZ(0px); }
+.ip1 { transform: rotateY(90deg) rotateX(80deg) translateZ(0px); }
+.ip2 { transform: rotateY(150deg) rotateX(80deg) translateZ(0px); }
+.ip3 { transform: rotateY(210deg) rotateX(80deg) translateZ(0px); }
+.ip4 { transform: rotateY(270deg) rotateX(80deg) translateZ(0px); }
+.ip5 { transform: rotateY(330deg) rotateX(80deg) translateZ(0px); }
+
+/* Inner petal bloom states */
+.ip0.bloom { transform: rotateY(30deg) rotateX(22deg) translateZ(18px); }
+.ip1.bloom { transform: rotateY(90deg) rotateX(22deg) translateZ(18px); }
+.ip2.bloom { transform: rotateY(150deg) rotateX(22deg) translateZ(18px); }
+.ip3.bloom { transform: rotateY(210deg) rotateX(22deg) translateZ(18px); }
+.ip4.bloom { transform: rotateY(270deg) rotateX(22deg) translateZ(18px); }
+.ip5.bloom { transform: rotateY(330deg) rotateX(22deg) translateZ(18px); }
+
+/* ---- Core / Center ---- */
+.core {
+  position: absolute;
+  left: 50%;
+  top: 32%;
+  width: 40px;
+  height: 40px;
+  margin-left: -20px;
+  margin-top: -20px;
+  transform-style: preserve-3d;
+  z-index: 8;
+}
+
+.core-glow {
+  position: absolute;
+  inset: -20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.2), transparent 60%);
+  animation: core-pulse 2s ease-in-out infinite;
+}
+
+@keyframes core-pulse {
+  0%, 100% { transform: scale(0.95); opacity: 0.6; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+
+.core-pistil {
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #ffe44d, #ffd700, #e6a800);
+  box-shadow:
+    0 0 20px rgba(255, 215, 0, 0.4),
+    inset 0 -4px 8px rgba(0,0,0,0.2),
+    inset 0 4px 8px rgba(255,255,255,0.3);
+}
+
+.core-stamen {
+  position: absolute;
+  width: 4px;
+  height: 20px;
+  background: linear-gradient(to top, #ffd700, #ffeb73);
+  border-radius: 2px;
+  transform-origin: bottom center;
+  top: -12px;
+  left: 50%;
+  margin-left: -2px;
+}
+
+.core-stamen::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -2px;
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, #ffe44d, #e6a800);
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(255, 215, 0, 0.4);
+}
+
+.s1 { transform: rotate(0deg) translateY(0); }
+.s2 { transform: rotate(60deg) translateY(0); }
+.s3 { transform: rotate(120deg) translateY(0); }
+.s4 { transform: rotate(180deg) translateY(0); }
+.s5 { transform: rotate(240deg) translateY(0); }
+.s6 { transform: rotate(300deg) translateY(0); }
+
+.s1::after { animation: stamen-wobble 2.5s ease-in-out infinite; }
+.s2::after { animation: stamen-wobble 2.5s ease-in-out infinite 0.4s; }
+.s3::after { animation: stamen-wobble 2.5s ease-in-out infinite 0.8s; }
+.s4::after { animation: stamen-wobble 2.5s ease-in-out infinite 1.2s; }
+.s5::after { animation: stamen-wobble 2.5s ease-in-out infinite 1.6s; }
+.s6::after { animation: stamen-wobble 2.5s ease-in-out infinite 2s; }
+
+@keyframes stamen-wobble {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-2px) scale(1.1); }
+}
+
+/* ============================================
+   PROGRESS RING
+   ============================================ */
+.progress-ring-container {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.progress-ring {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.progress-bg {
+  fill: none;
+  stroke: rgba(255, 107, 157, 0.1);
+  stroke-width: 2.5;
+}
+
+.progress-fill {
+  fill: none;
+  stroke: url(#progress-grad);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.3s ease;
+  filter: drop-shadow(0 0 6px rgba(255, 107, 157, 0.3));
+}
+
+.progress-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, #ffb6d9, #ff6b9d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.progress-text small {
+  font-size: 0.75rem;
+  -webkit-text-fill-color: var(--text-dim);
+  color: var(--text-dim);
+  margin-left: 2px;
+}
+
+.progress-label {
+  text-align: center;
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+/* ============================================
+   STATUS
+   ============================================ */
+.status-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+}
+
+.status-dots {
+  display: flex;
+  gap: 4px;
+}
+
+.status-dots span {
+  width: 4px;
+  height: 4px;
+  background: var(--petal-pink);
+  border-radius: 50%;
+  animation: dot-pulse 1.4s ease-in-out infinite;
+  box-shadow: 0 0 4px rgba(255, 107, 157, 0.3);
+}
+
+.status-dots span:nth-child(2) { animation-delay: 0.2s; }
+.status-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dot-pulse {
+  0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1.2); }
+}
+
+/* ============================================
+   LOGIN PAGE
+   ============================================ */
+#login-page {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(30px) scale(0.98);
+  transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(255, 107, 157, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 80%, rgba(255, 160, 122, 0.04) 0%, transparent 40%),
+    var(--bg-dark);
+}
+
+#login-page.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: all;
+}
+
+/* ---- Background Ambient Glow ---- */
+.bg-glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bg-glow::before {
+  content: '';
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  top: -150px;
+  right: -150px;
+  background: radial-gradient(circle, rgba(255, 107, 157, 0.04), transparent 60%);
+  border-radius: 50%;
+  animation: bg-float 15s ease-in-out infinite;
+}
+
+.bg-glow::after {
+  content: '';
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  bottom: -100px;
+  left: -100px;
+  background: radial-gradient(circle, rgba(255, 160, 122, 0.03), transparent 60%);
+  border-radius: 50%;
+  animation: bg-float 18s ease-in-out infinite reverse;
+}
+
+@keyframes bg-float {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(30px, -20px); }
+}
+
+/* ---- Login Card ---- */
+.login-card {
+  position: relative;
+  width: min(400px, 90vw);
+  z-index: 2;
+}
+
+.login-card-inner {
+  position: relative;
+  padding: 38px 32px 28px;
+  background: var(--bg-card);
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(24px);
+  overflow: hidden;
+}
+
+.login-card-inner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent,
+    var(--petal-pink),
+    var(--petal-peach),
+    var(--petal-pink),
+    transparent
+  );
+  opacity: 0.5;
+}
+
+/* ---- Login Header ---- */
+.login-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.login-icon {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 14px;
+}
+
+.icon-petal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 20px;
+  height: 12px;
+  margin-left: -10px;
+  margin-top: -6px;
+  background: linear-gradient(135deg, var(--petal-pink), var(--petal-peach));
+  border-radius: 50% 50% 40% 40%;
+  opacity: 0.4;
+  animation: icon-spin 8s linear infinite;
+}
+
+.icon-petal:nth-child(1) { transform: rotate(0deg); }
+.icon-petal:nth-child(2) { transform: rotate(60deg); }
+.icon-petal:nth-child(3) { transform: rotate(120deg); }
+.icon-petal:nth-child(4) { transform: rotate(180deg); }
+.icon-petal:nth-child(5) { transform: rotate(240deg); }
+.icon-petal:nth-child(6) { transform: rotate(300deg); }
+
+@keyframes icon-spin {
+  to { transform: rotate(360deg); }
+}
+
+.login-header h1 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.login-header p {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  letter-spacing: 0.02em;
+}
+
+/* ---- Form ---- */
+#login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.input-group label {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  color: var(--text);
+  font-size: 0.88rem;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+  position: relative;
+  z-index: 1;
+}
+
+.input-wrapper input::placeholder {
+  color: rgba(255, 255, 255, 0.12);
+}
+
+.input-wrapper input:focus {
+  border-color: rgba(255, 107, 157, 0.25);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.input-highlight {
+  position: absolute;
+  inset: -1px;
+  border-radius: 14px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  box-shadow: 0 0 20px rgba(255, 107, 157, 0.08);
+}
+
+.input-wrapper input:focus ~ .input-highlight {
+  opacity: 1;
+}
+
+/* ---- Options ---- */
+.login-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.75rem;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-dim);
+  cursor: pointer;
+}
+
+.checkbox-label input {
+  display: none;
+}
+
+.checkmark {
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  display: inline-block;
+  position: relative;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.checkbox-label input:checked + .checkmark {
+  background: var(--petal-pink);
+  border-color: var(--petal-pink);
+}
+
+.checkbox-label input:checked + .checkmark::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 5px;
+  height: 8px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.forgot-link {
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color 0.2s;
+  font-size: 0.75rem;
+}
+
+.forgot-link:hover {
+  color: var(--petal-pink);
+}
+
+/* ---- Login Button ---- */
+.login-btn {
+  width: 100%;
+  padding: 15px 24px;
+  background: linear-gradient(135deg, var(--petal-pink), var(--petal-magenta));
+  border: none;
+  border-radius: 14px;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.5s;
+}
+
+.login-btn:hover::before {
+  transform: translateX(100%);
+}
+
+.login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(255, 107, 157, 0.25);
+  filter: brightness(1.1);
+}
+
+.login-btn:active {
+  transform: translateY(0);
+}
+
+/* ---- Footer ---- */
+.login-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 22px;
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.1);
+}
+
+.status-led {
+  width: 5px;
+  height: 5px;
+  background: #22c55e;
+  border-radius: 50%;
+  animation: led-pulse 2s ease-in-out infinite;
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.3);
+}
+
+@keyframes led-pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 480px) {
+  .flower-scene {
+    width: 200px;
+    height: 260px;
+  }
+
+  .layer-outer .petal {
+    width: 60px;
+    height: 85px;
+    margin-left: -30px;
+    margin-top: -42px;
+  }
+
+  .layer-inner .petal {
+    width: 44px;
+    height: 65px;
+    margin-left: -22px;
+    margin-top: -32px;
+  }
+
+  .core {
+    width: 32px;
+    height: 32px;
+    margin-left: -16px;
+    margin-top: -16px;
+  }
+
+  .stem {
+    height: 110px;
+  }
+
+  .progress-ring-container {
+    width: 85px;
+    height: 85px;
+  }
+
+  .login-card-inner {
+    padding: 28px 20px 22px;
+  }
+
+  .login-header h1 {
+    font-size: 1.1rem;
+  }
+}
+
