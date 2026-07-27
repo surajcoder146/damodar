@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lamp Login</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page">
+    <div class="lamp-scene">
+      <div class="lamp">
+        <div class="lamp-head">
+          <div class="lamp-glow"></div>
+        </div>
+        <div class="lamp-shade"></div>
+        <div class="lamp-body"></div>
+        <div class="cord"></div>
+        <button class="pull-cord" id="pullCord" type="button" aria-label="Pull cord">
+          <span class="ball"></span>
+        </button>
+      </div>
+      <div class="light-beam"></div>
+    </div>
+
+    <div class="login-panel">
+      <button class="switch" id="switchBtn" type="button" aria-label="Toggle lamp switch">
+        <span class="switch-knob"></span>
+      </button>
+      <div class="auth-card">
+        <h1>Welcome Back</h1>
+        <p>Sign in to continue</p>
+        <form>
+          <label>
+            Username
+            <input type="text" placeholder="Enter username" />
+          </label>
+          <label>
+            Password
+            <input type="password" placeholder="Enter password" />
+          </label>
+          <button type="submit">SIGN IN</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const page = document.querySelector('.page');
+    const pullCord = document.getElementById('pullCord');
+    const switchBtn = document.getElementById('switchBtn');
+
+    function toggleLamp() {
+      page.classList.toggle('lamp-on');
+    }
+
+    pullCord.addEventListener('click', toggleLamp);
+    switchBtn.addEventListener('click', toggleLamp);
+  </script>
+</body>
+</html>
